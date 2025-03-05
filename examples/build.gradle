@@ -81,7 +81,8 @@ dependencies {
 //	annotationProcessor("io.ebean:querybean-generator:latest.release")
 	//implementation libs.logback
 	implementation(libs.springBootStarterValidation, libs.springBootStarterWeb, libs.bundles.upgradeBootApp)
-	implementation 'com.devinotele:javax-jakarta-servlet-adapter:2.0'
+	//implementation 'com.devinotele:javax-jakarta-servlet-adapter:2.0'
+	implementation 'com.github.devinotelecom:javax-jakarta-servlet-adapter:v2.0'
   implementation("org.projectlombok:lombok:1.18.+!!")
 
 	//*** TEST TEST TEST
