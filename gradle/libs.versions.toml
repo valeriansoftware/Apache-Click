@@ -14,14 +14,14 @@
 
 jdk = "17"
 
-groovy = "3.0.22!!" # иначе в момент обновления в maven central глюки из-за разных версий разных модулей groovy
-spring = "5.+!!" # Spring 5.3.32 vs boot 2.7.18 → 5.3.31
-springBoot = "2.+"
+groovy = "3.0.23" # иначе в момент обновления в maven central глюки из-за разных версий разных модулей groovy
+spring = "6.+!!" # Spring 5.3.32 vs boot 2.7.18 → 5.3.31
+springBoot = "3.+"
 jackson = "2.18.+!!"
 mssql = "12.8.1.jre11!!"
 eclipseCollections = "11.+"
 ebeanVersion = "latest.release"
-slf4jVersion = "1.7.+!!"
+slf4jVersion = "2.0.+!!"
 
 
 ########################################################################################################################
@@ -39,15 +39,13 @@ errorprone = { module = "com.google.errorprone:error_prone_annotations", version
 smallryeCommonAnnotation = { module = "io.smallrye.common:smallrye-common-annotation", version="latest.release" }
 
 # E.g. javax.annotation.@PostConstruct  #todo javax → jakarta
-javax-annotationApi   = { module = "javax.annotation:javax.annotation-api", version="1.+" }
-jakarta-annotationApi = { module = "jakarta.annotation:jakarta.annotation-api", version="2.+" }
+jakarta-annotationApi = { module = "jakarta.annotation:jakarta.annotation-api", version="latest.release" }
 
 # https://www.baeldung.com/javax-validation
-javax-validationApi   = { module = "javax.validation:validation-api", version="2.+" }
-jakarta-validationApi = { module = "jakarta.validation:jakarta.validation-api", version="3.0.+" }
+jakarta-validationApi = { module = "jakarta.validation:jakarta.validation-api", version="latest.release" }
 
 #
-jakarta-activationApi = { module = 'jakarta.activation:jakarta.activation-api', version="2.+" }
+jakarta-activationApi = { module = 'jakarta.activation:jakarta.activation-api', version="latest.release" }
 
 
 ########################################################################################################################
@@ -135,7 +133,6 @@ okio = { module = "com.squareup.okio:okio", version="3.+" }
 
 jsoup = { module = "org.jsoup:jsoup", version="1.+" } # jsoup HTML parser library @ https://jsoup.org/
 
-apacheHttpClient5 = { module = "org.apache.httpcomponents.client5:httpclient5", version="5.3.+" }
 
 icu4j = { module = "com.ibm.icu:icu4j", version="latest.release" } # Full unicode support. There IS a) an older version b) in *internal* packages in JDK
 
@@ -150,10 +147,10 @@ fastCsv = { module = "de.siegmar:fastcsv", version="latest.release" }
 
 ########################################################################################################################
 
-logback = { module = "ch.qos.logback:logback-classic", version="1.2.+!!" } # == Slf4j 1.7.+ & Spring Boot 2
+logback = { module = "ch.qos.logback:logback-classic", version="1.+!!" } # == Slf4j 1.7.+ & Spring Boot 2
 
 #logbackGelfPaluch = { module = "biz.paluch.logging:logstash-gelf", version="latest.release" } # https://github.com/mp911de/logstash-gelf ➕ http://logging.paluch.biz/ ➕ https://github.com/mp911de/logstash-gelf-subsystem
-logbackGelfSiegmar = { module = "com.github.magicprinc:logback-gelf", version="9.0" } # https://github.com/osiegmar/logback-gelf !!! 4.11 наша сборка logback 1.2 & fixes vs de.siegmar:logback-gelf
+#logbackGelfSiegmar = { module = "com.github.magicprinc:logback-gelf", version="9.0" } # https://github.com/osiegmar/logback-gelf !!! 4.11 наша сборка logback 1.2 & fixes vs de.siegmar:logback-gelf
 
 ########################################################################################################################
 
@@ -205,7 +202,8 @@ regexHyperscan = { module = "com.gliwka.hyperscan:hyperscan", version="5.4.0-2.0
 ########################################################################################################################
 # compileOnly API
 
-javaxServletApi = { module = "jakarta.servlet:jakarta.servlet-api", version="4.0.+" }
+javaxServletApi = { module = "javax.servlet:javax.servlet-api", version="4.0.1" }
+jakartaServletApi = { module = "jakarta.servlet:jakarta.servlet-api", version="latest.release" }
 
 ########################################################################################################################
 # *** TEST TEST TEST ***
@@ -214,7 +212,6 @@ junitVintageEngine = { module = "org.junit.vintage:junit-vintage-engine", versio
 mockitoCore = { module = "org.mockito:mockito-core", version="latest.release" }
 mockitoJunitJupiter = { module = "org.mockito:mockito-junit-jupiter", version="latest.release" }
 googleTruth = { module = "com.google.truth:truth", version="latest.release" }
-googleTruthJava8 = { module = "com.google.truth.extensions:truth-java8-extension", version="latest.release" }
 springTest = { module = "org.springframework:spring-test", version.ref="spring" }
 springBootStarterTest = { module = "org.springframework.boot:spring-boot-starter-test", version.ref="springBoot" }
 
@@ -248,10 +245,10 @@ byteBuddyAgent = { module = "net.bytebuddy:byte-buddy-agent", version="latest.re
 # implementation libs.bundles.groovy
 [bundles]
 
-coreAnnotation = ["jsr305","errorprone","smallryeCommonAnnotation","javax-annotationApi","jakarta-annotationApi"]
+coreAnnotation = ["jsr305","errorprone","smallryeCommonAnnotation","jakarta-annotationApi"]
 
 junit = [ # "hikariCP" boot обнаруживает его и требует jdbc url в конфиге
-		"junitJupiter","junitVintageEngine", "mockitoCore","mockitoJunitJupiter", "googleTruth","googleTruthJava8",
+		"junitJupiter","junitVintageEngine", "mockitoCore","mockitoJunitJupiter", "googleTruth",
     "springTest","eclipseCollectionsTest","logback","jsonAssert","okHttp-mockWebServer","okio","okHttpClient",
 		"testInstancio","springBootStarterTest","groovyCore","groovyTemplates", # "testInstancioQuickCheck"
 		"byteBuddy", "byteBuddyAgent"
@@ -272,9 +269,9 @@ smallryeConfig = ["smallryeConfig","smallryeConfigSourceYaml","snakeYaml","small
 okHttp = ["okHttpClient","okhttpLoggingInterceptor","okio"]
 
 upgradeBootApp = [ # "hikariCP" boot обнаруживает его и требует jdbc url в конфиге
-	"jsr305","errorprone","smallryeCommonAnnotation","javax-annotationApi","jakarta-annotationApi",
+	"jsr305","errorprone","smallryeCommonAnnotation","jakarta-annotationApi",
 	"jacksonCore","jacksonDatabind","jacksonAnnotations", "jacksonDatatypeJsr310","jacksonDatatypeJdk8","jacksonModuleParameterNames",
-	"javax-validationApi","jakarta-validationApi", "swaggerAnnotations",
+	"jakarta-validationApi", "swaggerAnnotations",
 	"guava", "commonsLang3", "caffeine", "slf4jApi", "slf4jJCL", "slf4jJUL", "slf4jLog4j",
 	"micrometerCore", "micrometerRegistryPrometheus",
 	#"commonUtils", "commonMetricsExt",
@@ -290,10 +287,10 @@ sonarlint = { id ="name.remal.sonarlint", version="latest.release" } # https://g
 errorprone = { id = "net.ltgt.errorprone", version="latest.release" } # https://errorprone.info/
 versions = { id = "com.github.ben-manes.versions", version="latest.release" } # https://github.com/ben-manes/gradle-versions-plugin
 
-spring-dependencyManagement = { id = "io.spring.dependency-management", version="1.+" }
+spring-dependencyManagement = { id = "io.spring.dependency-management", version="latest.release" }
 # нам нужен Spring Boot для объявления всех зависимостей, но не нужны bootJar и тд и suffix -plain у lib.jar
 # https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#managing-dependencies.dependency-management-plugin.using-in-isolation
-spring-boot = { id = "org.springframework.boot", version.ref="springBoot" } # Vaadin 23 doesn't work with Boot3
+spring-boot = { id = "org.springframework.boot", version="latest.release" } # Vaadin 23 doesn't work with Boot3
 
 # alias(libs.plugins.spring.dependencyManagement)
 # alias(libs.plugins.spring.boot).apply(false)

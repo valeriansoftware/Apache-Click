@@ -30,7 +30,7 @@ import org.apache.click.extras.control.EmailField;
 import org.apache.click.extras.control.IntegerField;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

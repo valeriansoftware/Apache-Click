@@ -1,12 +1,19 @@
 package org.apache.click.examples;
 
+import com.devinotele.servletbridge.FilterAdapter;
+import com.devinotele.servletbridge.FilterRegistrationAdapter;
+import com.devinotele.servletbridge.HttpServletAdapter;
+import jakarta.servlet.Filter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.apache.catalina.core.ApplicationFilterRegistration;
+import org.apache.catalina.core.StandardContext;
 import org.apache.click.examples.util.DatabaseInitListener;
 import org.apache.click.extras.cayenne.DataContextFilter;
 import org.apache.click.extras.filter.PerformanceFilter;
 import org.apache.click.extras.spring.PageScopeResolver;
 import org.apache.click.extras.spring.SpringClickServlet;
+import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -62,28 +69,18 @@ public class ExamplesApplication implements Lifecycle {
 		SpringApplication.run(ExamplesApplication.class, args);
 		System.err.println(" *** main thread finishes *** "+Thread.currentThread());
   }
-//	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-//			"classpath:/META-INF/resources/",// todo classpath*:
-//			"classpath:/resources/",
-//			"classpath:/static/",
-//			"classpath:/public/"
-//	};
-//	@Override
-//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
-//		registry.addResourceHandler("/static/**").addResourceLocations("classpath*:/static/").setCachePeriod(3600);// .resourceChain(true)
-//		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/resources/", "classpath:/static/", "classpath:/public/").setCachePeriod(3600).resourceChain(true);
-//	}
 
 	/**
-	 The Spring Click Servlet which handles *.htm requests ~ "*.htm"
-	 Add mapping informing ClickServlet to serve static resources contained under /click/* directly from Click's JAR files ~ "/click/*"
-	 Please note, you only need this mapping in restricted environments where Click cannot deploy resources to the file system.
+	 * The Spring Click Servlet which handles *.htm requests ~ "*.htm"
+	 * Add mapping informing ClickServlet to serve static resources contained under /click/* directly from Click's JAR files ~ "/click/*"
+	 * Please note, you only need this mapping in restricted environments where Click cannot deploy resources to the file system.
 	 */
 	@Bean
-	public ServletRegistrationBean<SpringClickServlet> clickServlet() {
+	public ServletRegistrationBean<HttpServletAdapter> clickServlet() {
 		//val reg = new ServletRegistrationBean<>(new SpringClickServlet(), "*.htm", "/click/*");
-		val reg = new ServletRegistrationBean<>(new SpringClickServlet(), "*.htm");
+		var springClickServlet = new SpringClickServlet();
+		HttpServletAdapter adapter = new HttpServletAdapter(springClickServlet);
+		var reg = new ServletRegistrationBean<>(adapter, "*.htm", "/click/*");
 		reg.setName("ClickServlet");
 		reg.setLoadOnStartup(0);
 
@@ -113,16 +110,6 @@ public class ExamplesApplication implements Lifecycle {
 		return new DatabaseInitListener();
 	}
 
-	/** Provides a thread local Cayenne DataContext filter */
-	@Bean
-	public FilterRegistrationBean<DataContextFilter> dataContextFilter () {
-		val reg = new FilterRegistrationBean<DataContextFilter>();
-		val filter = new DataContextFilter();
-		reg.setInitParameters(Map.of("oscache-enabled", "true"));
-		reg.setFilter(filter);
-		reg.addUrlPatterns("*.htm");
-		return reg;
-	}
 
 	/**
 	 Provides a web application performance filter which compresses the response
@@ -130,19 +117,6 @@ public class ExamplesApplication implements Lifecycle {
 	 The "cachable-paths" init parameter tells the filter resources can have their Expires header set so the browser will cache them.
 	 The "excludes-path" init parameter tells the filter which requests should be ignored by the filter.
 	 */
-	@Bean
-	public FilterRegistrationBean<PerformanceFilter> performanceFilter() {
-		val reg = new FilterRegistrationBean<PerformanceFilter>();
-		val filter = new PerformanceFilter();
-		reg.setInitParameters(Map.of(
-				"cachable-paths", "/assets/*",
-				"exclude-paths", "*/excel-export.htm"
-		));
-		reg.setFilter(filter);
-		reg.addUrlPatterns("*.css", "*.js", "*.gif", "*.png");
-		reg.setServletNames(Collections.singletonList("ClickServlet"));
-		return reg;
-	}
 
 	@Override
 	public void start () {

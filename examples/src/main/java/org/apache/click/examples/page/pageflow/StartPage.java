@@ -40,7 +40,7 @@ import org.apache.click.extras.control.DateField;
 import org.apache.click.util.ClickUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

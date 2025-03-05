@@ -17,7 +17,7 @@ import org.apache.click.extras.control.IntegerField;
 import org.apache.click.util.Bindable;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 
 /**

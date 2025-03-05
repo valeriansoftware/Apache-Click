@@ -35,7 +35,7 @@ import org.apache.click.extras.control.DateField;
 import org.apache.click.extras.control.EmailField;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 

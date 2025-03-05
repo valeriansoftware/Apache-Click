@@ -33,7 +33,7 @@ import org.apache.click.examples.service.CustomerService;
 import org.apache.click.util.ClickUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

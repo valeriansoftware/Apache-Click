@@ -27,6 +27,7 @@ import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Better {@link org.apache.click.extras.service.FreemarkerTemplateService}:
@@ -109,7 +110,9 @@ public class FreemarkerTemplateServiceSpring extends FreemarkerTemplateService {
 			log.warn("onInit: can't wrap ServletContext {}. {}", servletContext, this, e);
     }
 
-    var ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+    var ctx = WebApplicationContextUtils.getWebApplicationContext(
+				((Supplier<jakarta.servlet.ServletContext>) servletContext).get()
+		);
 		if (ctx == null){
 			ctx = ContextLoader.getCurrentWebApplicationContext();
 		}

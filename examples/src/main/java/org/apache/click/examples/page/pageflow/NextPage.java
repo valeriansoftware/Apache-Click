@@ -28,7 +28,7 @@ import org.apache.click.examples.service.BookingService;
 import org.apache.click.examples.service.CustomerService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 
 /**

@@ -44,7 +44,7 @@ import org.apache.click.examples.util.ExampleUtils;
 import org.apache.click.util.ContainerUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

@@ -37,7 +37,7 @@ import org.apache.click.extras.control.FormTable;
 import org.apache.click.extras.control.NumberField;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

@@ -18,6 +18,7 @@
  */
 package org.apache.click.examples.page.ajax;
 
+import jakarta.annotation.Resource;
 import org.apache.click.control.FieldSet;
 import org.apache.click.control.Form;
 import org.apache.click.examples.page.BorderPage;
@@ -25,7 +26,6 @@ import org.apache.click.examples.service.PostCodeService;
 import org.apache.click.extras.control.AutoCompleteTextField;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

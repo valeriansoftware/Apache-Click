@@ -10,7 +10,7 @@ import org.apache.click.examples.page.BorderPage;
 import org.springframework.context.Lifecycle;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.io.Serial;
 
 /** Provides an ImageSubmit control example */

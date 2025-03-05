@@ -30,7 +30,7 @@ import org.apache.click.extras.control.LinkDecorator;
 import org.apache.click.util.HtmlStringBuffer;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

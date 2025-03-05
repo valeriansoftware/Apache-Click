@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 import static org.apache.click.util.ClickUtils.trim;
 
@@ -62,7 +63,7 @@ import static org.apache.click.util.ClickUtils.trim;
  * <pre class="prettyprint">
  * package com.mycorp.page;
  *
- * import javax.annotation.Resource;
+ * import jakarta.annotation.Resource;
  * import org.apache.click.Page;
  * import org.springframework.stereotype.Component;
  *
@@ -371,7 +372,7 @@ public class SpringClickServlet extends ClickServlet {
   @Override
 	public void init () throws ServletException {
     super.init();
-    ServletContext servletContext = getServletContext();
+    val servletContext = ((Supplier<jakarta.servlet.ServletContext>) getServletContext()).get();
     applicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		if (applicationContext == null){
 			applicationContext = ContextLoader.getCurrentWebApplicationContext();
